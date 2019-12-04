@@ -1,0 +1,62 @@
+#intro{
+    width:100%;
+    min-height: 500px;
+    display:flex;
+    align-items:center;
+}
+#scrollable{
+    background:#000;
+}
+#scrollable > img{
+    position: absolute;
+    width:50%;
+}
+#scrollable img[src*=pacman]{
+    width:80%;
+    height:200px;
+    left:20px;
+    top:calc(65%);  
+    transform: rotate(-20deg);
+}
+#scrollable img[src*=asteroids]{
+    height:200px;
+    right:30px;
+    top:calc(100% - 450px); 
+    transform: rotate(-160deg);    
+}
+#intro > section{
+    color:white;
+}
+#intro > section > span {
+    margin-left:40px;
+}
+#concept{
+    display:flex;
+    grid-gap:10%;
+}
+#concept > .common-text{
+    flex: 1;
+}
+#concept > .common-image{
+    max-width: 400px;
+    margin:0 auto;
+}
+#concept > .common-image > img{
+    width:100%;
+}
+#options{
+    margin-top: 30px;
+}
+
+.common-button.primary{
+    background:rgb(24, 24, 24);
+}
+.common-button:not(.primary){
+    color:rgb(24, 24, 24);
+}
+@media(min-width: 720px){
+    #intro{ min-height: 700px; }
+}
+@media(max-width: 850px){
+    #concept{display: block;}
+}

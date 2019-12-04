@@ -1,0 +1,7 @@
+#navBar{
+    box-shadow:none;
+    border-bottom: 1px solid #c2c2c2 ;
+}
+.navSection.secondary .common-input{
+    margin:0;
+}

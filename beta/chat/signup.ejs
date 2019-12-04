@@ -1,0 +1,57 @@
+<%- include(_header) -%>
+<article id="input" class="common-container">
+    <form method="POST">
+        Signup: <br>
+        <%- common.input("password",        "Password", "name='password' type='password' required" ,"shadow") %><br>
+        <%- common.input("email",           "jonnydoe@mail.com", "name='email' required" ,"shadow") %><br>
+        <%- common.input("first_name",  "John",    "name='first_name' required" ,"shadow") %><br>
+        <%- common.input("middle_names", "Wilhelm", "name='middle_names'" ,"shadow") %><br>
+        <%- common.input("last_name",  "Doe",      "name='last_name' required" ,"shadow") %><br>
+        <%- common.switch("type", false)%> company?
+        <%- common.button("submit", {"Send":""}) %>
+    </form>
+    <%- common.button("signin", {"Signin":"./signin"})%>
+</article>
+<script>
+    let submit = document.getElementById("submit");
+    submit.onclick = function submitForm(event){
+        event.preventDefault();
+
+        for(let i = 0; i < document.getElementsByTagName('input').length; i++)
+            if(document.getElementsByTagName('input')[i].hasAttribute('required'))
+                if(document.getElementsByTagName('input')[i].value == "")
+                    return;
+
+        var http = new XMLHttpRequest();
+        http.open("POST", "", true);
+        http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+
+        var data = "&password=" + document.getElementById("password").value;
+        data += "&email=" + document.getElementById("email").value;
+        data += "&first_name=" + document.getElementById("first_name").value;
+        data += "&middle_names=" + document.getElementById("middle_names").value;
+        data += "&last_name=" + document.getElementById("last_name").value;
+        data += "&type=" + document.getElementById("type").checked;
+
+        http.send(data);
+        http.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                let response = JSON.parse(this.responseText)
+                if(response.status == "LoggedIn"){
+                    setCookie('uuid', response.cookies.uuid)
+                    setCookie('type', response.cookies.type)
+                    window.location.href = "./";
+                }
+            }
+        };
+    }
+    function setCookie(a, b){
+        document.cookie = a + "=" + b + ";"
+    }
+
+</script>
+
+<article id="messages" class="common-container">
+
+</article>
+<%- include(_footer) -%>

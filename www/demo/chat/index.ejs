@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <script>
+      if (
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          navigator.userAgent
+        )
+      ) {
+        window.location = "/phone";
+      }
+    </script>
+    <link rel="stylesheet" type="text/css" href="index.css" />
+    <title>Home - Namei</title>
+  </head>
+  <body>
+    <div id="html">
+      <div class="bovenbalk">
+        <div class="header_left"></div>
+        <div id="notleft">
+          <a class="logo" id="namei">Namei</a>
+          <div
+            id="instellingen"
+            style="float:right;font-size:18px;line-height:37px;"
+          >
+            <div class="instellingen">Instellingen</div>
+            <div class="instelling">asdf</div>
+            <div class="instelling">asdf</div>
+            <div class="instelling" id="uitloggen">Uitloggen</div>
+          </div>
+        </div>
+      </div>
+      <div class="content" id="content">
+        <div class="category_content"></div>
+        <div class="people_content" id="people_content"></div>
+        <div class="messages_content">
+          <div id="dikzak" style="display:none">
+            <div
+              style="margin-left: 14px;position:absolute;height:35.5px;;width:500px;float:left;"
+            >
+              <h2 id="dikking">.</h2>
+              <groen
+                class="green oordeel"
+                style="background-color: rgb(0, 128, 0)"
+              ></groen>
+              <oranje
+                class="orange oordeel"
+                style="background-color: rgb(255, 165, 0)"
+              ></oranje>
+              <rood
+                class="red oordeel"
+                style="background-color:rgb(255, 0, 0)"
+              ></rood>
+            </div>
+          </div>
+          <div class="messages_conversation">
+            <div id="messages"></div>
+          </div>
+          <div class="messages_compose">
+            <div class="basisvragen">
+              <div
+                class="basisvraag 1"
+                spellcheck="false"
+                title="Dubbelklik om te sturen"
+              >
+                Wat viel je het meeste op aan deze vacature?
+              </div>
+              <div
+                class="basisvraag 2"
+                spellcheck="false"
+                title="Dubbelklik om te sturen"
+              >
+                Vertel wat over jezelf.
+              </div>
+            </div>
+            <div id="plus">
+              <div id="agenda">
+                <div
+                  id="top"
+                  style="height: 14px;border-bottom: 2px solid black;line-height: 14px;padding: 1px;font-size: 9px;background: wheat;border-top-left-radius: 5px;border-top-right-radius: 5px;"
+                >
+                  JULI
+                </div>
+                <div
+                  id="bottom"
+                  style="text-align: center;margin: auto auto;font-size: 20px;height: 26px;line-height: 26px;"
+                >
+                  30
+                </div>
+              </div>
+            </div>
+            <form class="msg_send" action="">
+              <input
+                id="m"
+                autocomplete="off"
+                class="textarea2"
+                placeholder="Typen..."
+              />
+              <input type="submit" id="send" value="Stuur" />
+            </form>
+          </div>
+        </div>
+      </div>
+      <style id="style">
+        #test {
+          display: none;
+          height: 27px;
+          background-color: #ddd;
+          line-height: 2;
+          padding-left: 10px;
+          width: 80px;
+          z-index: 1;
+          border-radius: 2px;
+          font-size: 15px;
+          cursor: default;
+          color: black;
+        }
+      </style>
+    </div>
+    <div id="test">Wijzigen</div>
+    <script
+      src="/socket.io/socket.io.js"
+      type="application/javascript"
+    ></script>
+
+    <script src="/demo/js/jquery"></script>
+    <script src="/demo/js/chat"></script>
+    <!-- <script src="/script"></script> -->
+    <script>
+      var socket = io();
+      var o = [];
+      var hvac;
+      var index;
+      var chat;
+      var remove;
+              socket.on("connect", () => {
+                    console.log("socket on connect");
+                    socket.on("chat message", function (msg, k, j) {
+                        console.log(hvac);
+                        if (hvac != undefined) {
+                            console.log(chat.k, k.ai);
+                            if (chat.k == k.ai) {
+                                $(".message").remove();
+                                chat.msgs.push(msg);
+                                chat.msgs.forEach(append);
+                                u(chat);
+                            }
+                        }
+                        sessionStorage.setItem("bedrijf", JSON.stringify(j));
+                        a();
+                    });
+                    a();
+                    $(".people_content").on("click", "#remove", function (e) {
+                        //remove.click
+                        e.stopPropagation();
+                        e.preventDefault();
+                        var text = $(this)
+                            .siblings(".boxcontent")
+                            .children(".conversation_title")
+                            .text();
+                        if (text.indexOf("inactief") > -1 == true) {
+                            text = text + "<b> definitief</b>";
+                        }
+                        $("body").append(
+                            '<div class="popup"><div class="popupcontent"><p class="vraag">Weet je zeker dat je ' +
+                            text +
+                            ' wilt verwijderen?</p><div class="vraagonder"><div class="knop annuleren">Annuleren</div><div class="knop ja">Ja</div></div></div></div>'
+                        );
+                    });
+                    $("body").on("click", ".annuleren", function (e) {
+                        weg($("#remove").siblings(".boxcontent"));
+                        $(".popupupcontent")
+                            .parent()
+                            .remove();
+                    });
+                    $("body").on("click", ".ja", function (e) {
+                        //ja.click
+                        var bedrijf = JSON.parse(sessionStorage.bedrijf);
+                        if (bedrijf.vacatures[index].chats[remove.i].active == "false") {
+                            console.log("gaande", bedrijf.vacatures[index].chats);
+                            bedrijf.vacatures[index].chats.splice([remove.i], 1);
+                            $("#remove")
+                                .siblings(".boxcontent")
+                                .remove();
+                        } else {
+                            bedrijf.vacatures[index].chats[remove.i].active = "false";
+                            $("#remove")
+                                .siblings(".boxcontent")
+                                .addClass("inactive");
+                        }
+                        sessionStorage.setItem("bedrijf", JSON.stringify(bedrijf));
+                        weg($("#remove").siblings(".boxcontent"));
+                        $(".popup").remove();
+                        socket.emit("update", JSON.stringify(sessionStorage.bedrijf));
+                    });
+                    function weg(dit) {
+                        dit
+                            .children(".onder")
+                            .children(".tijd")
+                            .show();
+                        dit.siblings(".tijd").show();
+                        $(".kleiner").removeClass("kleiner");
+                        $("#remove").remove();
+                    }
+
+                    $(".people_content").on("click", ".boxcontent", function (e) {
+                        //boxs.click
+                        e.stopPropagation();
+                        $("#class").removeAttr("id");
+                        $(this)
+                            .parent()
+                            .attr("id", "class");
+                        if ($(this).siblings("#remove")[0]) {
+                            weg($(this));
+                            return false;
+                        }
+                        $("#dikzak").show();
+                        $(".messages_compose").show();
+                        console.log(e.currentTarget.children[1]);
+                        var c = hvac.chats.filter(function (a) {
+                            return a.name == e.currentTarget.children[1].textContent;
+                        });
+                        chat = c[0];
+                        chat.i = hvac.chats.indexOf(chat);
+                        $("#dikking").html(chat.name);
+                        $("#dikzak").prepend(
+                            '<div class="profile aa" style="background:linear-gradient(' +
+                            chat.kleur +
+                            ')"></div>'
+                        );
+                        $(".message").remove();
+                        chat.msgs.forEach(append);
+                        var r = chat.oordeel;
+                        if (r) {
+                            $(".oordeel").css("width:0px;");
+                            //$('#dikzak').css('border-bottom','3px solid '+r+' !important;');
+                        } else {
+                            //$('#dikking').html('onzin');
+                            //document.getElementById('dikzak').style='border-bottom:3px solid black!important';
+                            //document.getElementsByClassName('basisvraag').style='background-color:'+c[0].kleur+'!important';
+                        }
+                        $("#m").focus();
+                        $(this)
+                            .parent()
+                            .trigger("click");
+                    });
+                    $(".people_content").on("contextmenu", ".boxcontent", function (e) {
+                        e.stopPropagation();
+                        if ($("#remove")[0]) {
+                            return false;
+                        }
+                        for (i = 0; i < hvac.chats.length; i++) {
+                            if (
+                                hvac.chats[i].name ==
+                                $(this)
+                                    .children(".conversation_title")
+                                    .text()
+                            ) {
+                                remove = hvac.chats[i];
+                                remove.i = i;
+                                console.log(remove);
+                            }
+                        }
+                        e.preventDefault();
+                        e.stopPropagation();
+                        $(this)
+                            .parent()
+                            .removeAttr("id");
+                        $(this).addClass("kleiner");
+                        $(this)
+                            .children(".onder")
+                            .children(".tijd")
+                            .hide();
+                        $(this)
+                            .parent()
+                            .append(
+                                '<div id="remove" style="z-index:999;float:right;background-color:#f11;height:100%;width:calc(20% - 1px);margin-left:0.4pt;border-radius:2px"><svg height="100%" viewBox="0 0 24 24" width="100%"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" fill="#fff"></path></svg></div>'
+                            );
+                    });
+
+                    function a() {
+                        if (
+                            sessionStorage.getItem("bedrijf") != "undefined" &&
+                            sessionStorage.getItem("bedrijf") != null
+                        ) {
+                            var al = JSON.parse(sessionStorage.getItem("bedrijf"));
+                            for (i = 0; i < al.vacatures.length; i++) {
+                                if (al.vacatures[i].chats.length > 0) {
+                                    var u = "";
+                                    if (al.vacatures[i].chats.length > 1) {
+                                        u = "en";
+                                    }
+                                    $(".aantal" + i).text(
+                                        al.vacatures[i].chats.length + " sollicitant" + u
+                                    );
+                                    var ai = JSON.parse(JSON.stringify(i));
+                                    $(".boxv" + i).click(function () {
+                                        //boxv.click
+                                        var i = document.getElementById("c");
+                                        if (i) {
+                                            document.getElementById(
+                                                "c"
+                                            ).lastElementChild.style.color = "black";
+                                            $("#c").removeAttr("id", "c");
+                                        }
+                                        var a = $(this).attr("id", "c");
+                                        var text = document.getElementById("c").firstElementChild
+                                            .textContent;
+                                        for (i = 0; i < al.vacatures.length; i++) {
+                                            if (al.vacatures[i].name == text) {
+                                                index = i;
+                                                hvac = al.vacatures[i];
+                                                hvac.i = i;
+                                            }
+                                        }
+                                        $(".boxs").remove();
+                                        $(".message").remove();
+                                        $("#dikzak").hide();
+                                        $(".messages_compose").hide();
+                                        var soli = hvac.sollicitatievragen;
+                                        if (!hvac.sollicitatievragen) {
+                                            hvac.sollicitatievragen = [];
+                                            hvac.sollicitatievragen[0] = $(".1").text();
+                                            hvac.sollicitatievragen[1] = $(".2").text();
+                                            al.vacatures[index] = hvac;
+                                            sessionStorage.setItem("bedrijf", JSON.stringify(al));
+                                        } else {
+                                            $(".1").html(soli[0]);
+                                            $(".2").html(soli[1]);
+                                        }
+                                        hvac.chats.forEach(myFunction);
+                                    });
+                                }
+                            }
+                        }
+                    }
+                    socket.on("loginb", function (b) {
+                        console.log(26);
+                        if (b == false) {
+                            console.log("b==false");
+                            $("#opmerking").html("Invalid login");
+                            $("#opmerking").css("color", "red");
+                        } else {
+                            if (
+                                b.pwd == $("#pw").val() &&
+                                b.bedrijfsnaam == $("#bnaam").val()
+                            ) {
+                                console.log("ajskliho");
+                                sessionStorage.setItem("bedrijf", JSON.stringify(b));
+                                window.location = location;
+                            }
+                        }
+                    });
+                    console.log(socket.id);
+                    socket.on("alr", function () {
+                        $("#opmerking1").html("Dit bedrijf is al ingeschreven");
+                    });
+                    socket.on("bedrijf", function (ai) {
+                        console.log(JSON.stringify(ai));
+                        console.log("lk';jhgfdxdzs");
+                        sessionStorage.setItem("bedrijf", JSON.stringify(ai));
+                        window.location = location;
+                    });
+                    socket.on("update", function (data) {
+                        if (data == "logout") {
+                            sessionStorage.clear();
+                            window.location = location;
+                        } else {
+                            sessionStorage.setItem("bedrijf", JSON.stringify(data));
+                        }
+                    });
+                    if (
+                        sessionStorage.getItem("bedrijf") == "undefined" ||
+                        sessionStorage.getItem("bedrijf") == "null" ||
+                        sessionStorage.getItem("bedrijf") == null ||
+                        sessionStorage.getItem("bedrijf") == undefined
+                    ) {
+                        document.getElementById("content").innerHTML =
+                            "<form class='classss'id='login' action=''><h2 id='opmerking'>Inloggen</h2><inputcontainer><ul><li class='span'></li><li><span>Bedrijfsnaam</span></li><li><input id='bnaam' autocomplete='off' class='textarea'style='font-size:20px;'placeholder='Namei'></li><li class='span'><span>Wachtwoord</span></li><li><input autocomplete='off'class='textarea'id='pw'style='font-size:20px;'type='password'></li><li><input type='submit' class='button' value='Stuur'></li></ul></inputcontainer></form><form class='classss'id='registratie' action=''><h2 id='opmerking1'>Registreren bij Namei</h2><inputcontainer><ul id='ul'><li class='span'></li><li><span>Bedrijfsnaam</span></li><li><input id='m' autocomplete='off' class='textarea'style='font-size:20px;'placeholder='Namei'></li><li  class='span'><span>Beschrijf de bedrijfscultuur in tien tot vijftien woorden</span></li><li><input type='text' placeholder='Gedreven, actief etc' class='textarea bedrijfscultuur'style='font-size: 20px;'></li><li class='span'><span>Vacatures</span></li><li><input autocomplete='off'class='vacature1 vacature textarea'style='font-size:20px;'placeholder='Vacature'></li><li><input autocomplete='off'class='vacature2 vacature textarea'style='font-size:20px;'placeholder='Vacature'></li><li class='span' id='az'><span>Wachtwoord</span></li><li><input autocomplete='off'class='vacature2 textarea'id='pwd'style='font-size:20px;'type='password'></li><li><input type='submit' class='button' value='Stuur'></li></ul></inputcontainer></form>";
+                        document.getElementById("m").focus();
+                        $("#registratie").submit(function () {
+                            if (
+                                $("#m").val() === "" ||
+                                $(".vacature1").val() === "" ||
+                                $(".bedrijfscultuur").val() === "" ||
+                                $("#pwd").val() === ""
+                            ) {
+                                $("#opmerking1").html("Niet alle velden zijn ingevuld");
+                                $("#opmerking1").css("color", "red");
+                                return false;
+                            } else {
+                                $("#opmerking1").html("Verzonden");
+                                var vacatures = [];
+                                var bedrijf = {};
+                                bedrijf.bedrijfsnaam = $("#m").val();
+                                vacatures.push($(".vacature1").val());
+                                vacatures.push($(".vacature2").val());
+                                vacatures.forEach(f);
+
+                                function f(e) {
+                                    var i = vacatures.indexOf(e);
+                                    var ii = i + 1;
+                                    vacatures[i] = new Object();
+                                    vacatures[i].name = $(".vacature" + ii).val();
+                                    vacatures[i].chats = [];
+                                }
+                                bedrijf.bedrijfscultuur = $(".bedrijfscultuur").val();
+                                bedrijf.vacatures = vacatures;
+                                bedrijf.id = socket.id;
+                                bedrijf.pwd = $("#pwd").val();
+                                socket.emit("bedrijfobj", bedrijf);
+                                console.log(bedrijf);
+                                return false;
+                            }
+                        });
+                        $("#login").submit(function (e) {
+                            if ($("#bnaam").val() === "" || $("#pw").val() === "") {
+                                $("#opmerking").html("Niet alle velden zijn ingevuld");
+                                $("#opmerking").css("color", "red");
+                                return false;
+                            } else {
+                                $("#opmerking").html("submitted");
+                                var login = {
+                                    pwd: $("#pw").val(),
+                                    bnaam: $("#bnaam").val()
+                                };
+                                if (login.length != 0 && login != undefined && login != null) {
+                                    socket.emit("loginb", login);
+                                }
+                            }
+                            return false;
+                        });
+                    } else {
+                        $("#instellingen").show();
+                        var bedrijf = JSON.parse(sessionStorage.getItem("bedrijf"));
+                        var vacatures = bedrijf.vacatures;
+                        var ab = 0;
+                        $(".boxv").remove();
+                        vacatures.forEach(function (e) {
+                            $(".category_content").append(
+                                $('<div class="box boxv boxv' + ab + '"></div>')
+                            );
+                            $(".category_content div:last").append(
+                                $('<p class="category_title"></p>').text(e.name)
+                            );
+                            $(".category_content div:last").append(
+                                $('<div class="aantal aantal' + ab + '">Nieuw</div>')
+                            );
+                            bedrijf.id = socket.id;
+                            ab += 1;
+                        });
+                        a();
+                        socket.emit("update", bedrijf);
+                        $("#namei").html(bedrijf.bedrijfsnaam);
+                        $(".basisvraag").css("background-color", "#008081");
+                        $(".basisvraag").css("width", "calc(90% - 7px)");
+                        $(".basisvraag").css("margin-left", "4px");
+                        console.log(bedrijf);
+                    }
+                });
+      if (!$("#c")[0]) {
+        hvac = undefined;
+      }
+      $("#top").text(mand[nu.getMonth()].toUpperCase());
+      $("#bottom").text(nu.getDate());
+      $(function() {
+        $("#uitloggen").click(function() {
+          sessionStorage.clear();
+          window.location = location;
+        });
+
+        var alles = sessionStorage.getItem("bedrijf");
+        var html = $(".content").html();
+        $(".basisvraag").dblclick(function() {
+          var msg = $(this).text();
+          console.log($("#m").val());
+          emit(msg);
+        });
+        var nr = nu.getMonth();
+        $("#agenda").click(function(e) {
+          //agenda.click
+          $(".messages_content").append(
+            '<div class="popup agenda"style="position:absolute;"><div id="acagenda"><div class="top">Sollicitatiegesprek inplannen met ' +
+              $("#class")
+                .firstChild()
+                .children(".conversation_title")
+                .text() +
+              '?</div><div class="bottom"><div class="onderkant"></div></div></div>'
+          );
+          agenda(nu.getMonth());
+        });
+        $(".messages_content").on("click", "left", function(e) {
+          if (JSON.stringify(e.currentTarget.classList).indexOf("narrow") > 1) {
+            return false;
+          } else {
+            nr -= 1;
+            agenda(nr);
+          }
+        });
+        $(".messages_content").on("click", "right", function(e) {
+          nr += 1;
+          agenda(nr);
+        });
+        var data = [];
+        function agenda(n) {
+          $(".midden").remove();
+          $(".data").remove();
+          var maandnr;
+          var jaar;
+          var clas;
+          var arrow = "arrow";
+          if (n in maand) {
+            maandnr = n;
+            jaar = nu.getFullYear();
+            if (n <= nu.getMonth()) {
+              arrow = "narrow";
+            }
+          } else {
+            var jaar = nu.getFullYear() + n / 12;
+            if (jaar % 1 != 0) {
+              jaar = Math.floor(jaar);
+              maandnr = Math.round((nu.getFullYear() + n / 12 - jaar) * 12);
+            } else {
+              maandnr = 0;
+            }
+          }
+          $(".bottom").prepend(
+            '<div class="midden"><left class="' +
+              arrow +
+              '"><svg width="16" height="16"><path d="m 10,3 -5,5 5,5 z" fill="#555"/></svg></left><div id="maand">' +
+              maand[maandnr].charAt(0).toUpperCase() +
+              maand[maandnr].slice(1) +
+              " " +
+              jaar +
+              '</div><right class="arrow"><svg width="16" height="16"><path d="m 6,3 5,5 -5,5 z" fill="#555"/></svg></right></div><div class="data"></div>'
+          );
+          list(dagen(jaar)[maandnr]).forEach(function(e) {
+            var a = data.filter(function(q) {
+              return q.jaar == jaar && q.maand == maandnr && q.dag == e;
+            });
+            if (
+              e < nu.getDate() &&
+              maandnr == nu.getMonth() &&
+              jaar == nu.getFullYear()
+            ) {
+              clas = "geweest";
+            } else {
+              clas = "datum";
+              if (a.length > 0) {
+                clas = "datum clicked";
+              }
+            }
+            $(".data").append('<div class="' + clas + '">' + e + "</div>");
+          });
+          $(".datum").click(function() {
+            if (!$(this).hasClass("clicked")) {
+              $(this).addClass("clicked");
+            }
+            data.push({
+              jaar: jaar,
+              maand: maandnr,
+              dag: JSON.parse($(this).text())
+            });
+            var jr = "";
+            if (jaar != nu.getFullYear()) {
+              jr = jaar;
+            }
+            var f = JSON.parse(sessionStorage.bedrijf).bedrijfsnaam;
+            $(".onderkant").append(
+              '<div class="sturen" id="' +
+                (data.length - 1) +
+                '">' +
+                dag[
+                  new Date(jaar, maandnr, JSON.parse($(this).text())).getDay()
+                ] +
+                " " +
+                JSON.parse($(this).text()) +
+                " " +
+                maand[maandnr] +
+                " " +
+                jr +
+                ' van <input value="14:00"> tot <input value="14:30"> in <input id="txt" type="text"value="' +
+                f +
+                ' kantoor"style="width:' +
+                (f.length + 8) * 7 +
+                'px"><svg height="100%" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" fill="#aaa"></path></svg></div>'
+            );
+            $(".stuur").remove();
+            $(".top").append('<div class="stuur">Sturen</div>');
+          });
+        }
+        $(".messages_content").delegate(
+          ".sturen input:last-of-type",
+          "keypress",
+          function() {
+            this.style.width = (this.value.length + 1) * 7 + "px";
+          }
+        );
+        $(".messages_content").delegate(".stuur", "click", function() {
+          for (i = 0; i < data.length; i++) {
+            data[i].van = $("#" + i + " input:first-of-type").val();
+            data[i].tot = $("#" + i + " input:nth-of-type(2)").val();
+            data[i].in = $("#" + i + " input:last-of-type").val();
+          }
+          $(".agenda").remove();
+          $(".clicked").removeClass("clicked");
+          emit(data);
+        });
+        $(".messages_content").delegate(".sturen svg", "click", function() {
+          var text = $(this)
+            .parent()
+            .text()
+            .split(" ");
+          var tekst = $("#maand")
+            .text()
+            .split(" ");
+          var textt = text[2].charAt(0).toUpperCase();
+          if (
+            $("#maand")
+              .text()
+              .indexOf(textt) > -1
+          ) {
+            if (
+              text[3].length == 0 ||
+              JSON.parse(text[3]) == JSON.parse(tekst[1])
+            ) {
+              $(".datum:nth-child(" + JSON.parse(text[1]) + ")").removeClass(
+                "clicked"
+              );
+            }
+          }
+          data.splice(
+            $(this)
+              .parent()
+              .attr("id"),
+            1
+          );
+          $(this)
+            .parent()
+            .remove();
+        });
+        var rtr = 0;
+        var one = 1;
+        var zero = 0;
+        $("#html").click(function(e) {
+          //console.log($('#acagenda').find($(this)).length);
+          //console.log($('.midden').find($(this)));
+          //console.log($(this).closest('[acagenda]'));
+          if (
+            $("#acagenda").has(e.target).length == 0 &&
+            $("#acagenda").length > 0 &&
+            document.getElementById("acagenda") !== null &&
+            $("#agenda").has(e.target).length == 0
+          ) {
+            if (rtr > 0) {
+              console.log($("#acagenda").has($(this)));
+              //       $('.messages_content').remove($('.agenda'));
+              $(".agenda").remove();
+            }
+            rtr++;
+          }
+        });
+        /* $('#html').click(function(e){
+            console.log($('.agenda').has(e.target).length==1);
+            if(!$('#acagenda')[0]==false&&$('#acagenda').has(e.target).length>0==false){
+                var a;
+                if(e.target.id!==undefined&&e.target.id.length>0){
+                    a = '#'+e.target.id;
+                }
+                console.log($('#acagenda:has('+e.target.nodeName+a+')')[0]);
+                console.log(e.target.nodeName+a);
+               if(rtr>0){
+                    $('.agenda').remove();
+                }
+                rtr++;
+            }
+        })*/
+        $(".msg_send").submit(function(e) {
+          e.preventDefault;
+          if ($("#m").val() === "") {
+            console.log(5);
+            return false;
+          } else {
+            var msg = $("#m").val();
+            emit(msg);
+          }
+          $("#m").focus();
+          return false;
+        });
+        function append(e) {
+          if (e.content == false) {
+            $("#messages").append(
+              $(
+                '<div class="message null">Dit bericht is verwijderd.<p class="tijdm">' +
+                  tijd(e.tijd) +
+                  "</p></div>"
+              )
+            );
+          } else {
+            if (typeof e.content == "object") {
+              if (!e.content.checked) {
+                $("#messages").append(
+                  $(
+                    '<div class="message ' +
+                      e.afz +
+                      ' wanneerkanje"><p class="tijdm">' +
+                      tijd(e.tijd) +
+                      "</p></div>"
+                  )
+                );
+                e.content.forEach(function(a) {
+                  $(".message:last-of-type").prepend(
+                    '<p class="optie"style="width:80%;"><input type="checkbox" disabled> Sollicitatiegesprek ' +
+                      a.dag +
+                      " " +
+                      maand[a.maand] +
+                      " van " +
+                      a.van +
+                      " tot " +
+                      a.tot +
+                      ", " +
+                      a.in +
+                      "</p>"
+                  );
+                });
+                e.content.forEach(function(a) {
+                  var j = "";
+                  if (a.jaar != new Date().getFullYear()) {
+                    j = a.jaar;
+                  }
+                });
+              } else {
+                var w = $(".wanneerkanje")[e.content.i];
+                w.childNodes[w.childNodes.length - 2].remove();
+                for (i = 0; i < w.childNodes.length; i++) {
+                  if (
+                    JSON.stringify(w.childNodes[i].classList).indexOf("optie") >
+                    -1
+                  ) {
+                    w.childNodes[i].firstChild.disabled = true;
+                    w.childNodes[i].firstChild.checked = e.content.checked[i];
+                  }
+                }
+                var filter = e.content.checked.filter(function(c) {
+                  return c === true;
+                });
+                if (e.content.checked.length > 1 && filter.length > 1) {
+                  var u = $(".bedrijfsnaam span").text() + " kan op ";
+                  o.forEach(function(z) {
+                    var l = "";
+                    if (o.indexOf(z) < o.length - 1) {
+                      l = ", ";
+                    }
+                    (u += opties[z].dag + " " + maand[opties[z].maand] + " "),
+                      opties[z].van + l;
+                  });
+                } else {
+                  if (filter.length == 1) {
+                    for (i = 0; i < w.childNodes.length; i++) {
+                      if (
+                        JSON.stringify(w.childNodes[i].classList).indexOf(
+                          "optie"
+                        ) > -1
+                      ) {
+                        if (w.childNodes[i].firstChild.checked == true) {
+                          u = w.childNodes[i].textContent.replace(
+                            "Sollicitatiegesprek",
+                            "U heeft een sollicitatiegesprek op"
+                          );
+                        }
+                      }
+                    }
+                  }
+                }
+                $("#messages").append(
+                  $(
+                    '<div class="message duidelijk"style="overflow:hidden;">' +
+                      u +
+                      "</div>"
+                  )
+                );
+              }
+            } else {
+              $("#messages").append(
+                $(
+                  '<div class="msgwrapper"><div class="message ' +
+                    e.afz +
+                    '">' +
+                    e.content +
+                    '<p class="tijdm">' +
+                    tijd(e.tijd) +
+                    "</p></div></div>"
+                )
+              );
+            }
+          }
+          var messagg = document.querySelectorAll(".message");
+          var ds = messagg.length - 1;
+          messagg[ds].scrollIntoView();
+        }
+        function emit(msg) {
+          console.log("emitting");
+          var k = {};
+          k.bedrijfsnaam = JSON.parse(alles).bedrijfsnaam;
+          console.log;
+          k.afz = true;
+          k.ai = chat.k;
+          if (hvac.name === null || hvac.name == undefined) {
+            return false;
+          } else {
+            k.vacature = hvac.name;
+            setTimeout(function() {
+              var mm = new Object();
+              mm.content = msg;
+              mm.afz = "b";
+              mm.tijd = new Date();
+              socket.emit("chat", mm, k, JSON.parse(sessionStorage.bedrijf));
+            }, 40);
+            $("#m").val("");
+            return false;
+          }
+        }
+
+
+
+        function myFunction(e) {
+          var ee = e.msgs[e.msgs.length - 1].content;
+          if (e.msgs[e.msgs.length - 1].content == false) {
+            var u = "Dit bericht is verwijderd.";
+          } else {
+            var u = ee;
+          }
+          if (e.active == true) {
+            if (typeof ee == "object") {
+              if (!ee.checked) {
+                console.log("gaande");
+                u =
+                  "Sollicitatiegesprek " +
+                  ee[0].dag +
+                  " " +
+                  maand[ee[0].maand] +
+                  " " +
+                  ee[0].van +
+                  " " +
+                  ee[0].tot +
+                  ", " +
+                  ee[0].in;
+              } else {
+                console.log("ue");
+                u(e);
+              }
+            }
+            $("#people_content").prepend(
+              $(
+                '<div class="box boxs" ><div class="boxcontent"><div class="profile" style="background:linear-gradient(' +
+                  e.kleur +
+                  ')"></div><p class="conversation_title">' +
+                  e.name +
+                  '</p><div class="onder"><p class="laatstebericht">' +
+                  u +
+                  '</p><p class="tijd">' +
+                  tijd(e.msgs[e.msgs.length - 1].tijd) +
+                  "</p></div></div></div></div>"
+              )
+            );
+          } else {
+            $("#people_content").append(
+              $(
+                '<div class="box boxs" ><div class="boxcontent inactive"style="background:linear-gradient(' +
+                  e.kleur +
+                  ');"><p class="conversation_title">' +
+                  e.name +
+                  ' (inactief)</p><div class="onder"><p class="laatstebericht">' +
+                  u +
+                  '</p><p class="tijd">' +
+                  tijd(e.msgs[e.msgs.length - 1].tijd) +
+                  "</p></div></div></div></div>"
+              )
+            );
+          }
+        }
+      });
+      function u(e) {
+        console.log(e);
+        var ee = e.msgs[e.msgs.length - 1].content;
+        console.log(ee);
+        var u;
+        var wanneerkanje = e.msgs.filter(function(u) {
+          return u.content.length > 1;
+        });
+        var ee = ee.checked;
+        var opties = e.msgs[e.msgs[e.msgs.length - 1].content.i].content;
+        console.log(ee, opties);
+        var o = [];
+        for (i = 0; i < ee.length; i++) {
+          if (ee[i] == true) {
+            o.push(i);
+          }
+        }
+        if (ee.length === 1 || o.length === 1) {
+          if (o.length === 1) {
+            u =
+              "Sollicitatiegesprek " +
+              o[0].dag +
+              " " +
+              maand[o[0]].maand +
+              " " +
+              o[0].van +
+              " " +
+              o[0].tot +
+              ", " +
+              o[0].in +
+              "";
+          } else {
+            //ee.length===1
+            u =
+              e.name +
+              " kan niet op " +
+              opties[o[0]].dag +
+              " " +
+              maand[opties[o[0]].maand] +
+              " om " +
+              opties[o[0]].van;
+          }
+        } else {
+          u = e.name + " kan op ";
+          o.forEach(function(z) {
+            var l = "";
+            if (o.indexOf(z) < o.length - 1) {
+              l = ", ";
+            }
+            (u += opties[z].dag + " " + maand[opties[z].maand] + " "),
+              opties[z].van + l;
+          });
+        }
+      }
+      var f = sessionStorage.bedrijf;
+      $(".basisvraag").on("keypress", function(e) {
+        /*var filter = JSON.parse(f).vacatures.filter(function(e) {
+            return e.name == vacature.name;
+        });
+        vacature.sollicitatievragen = [];
+        setTimeout(function() {
+            if (e.key == 'Enter') {
+                e.preventDefault();
+                weerweg();
+            }
+            $(':focus').attr('id', 'focus');
+            hvac=vacature;
+            filter[0].sollicitatievragen = [];
+            filter[0].sollicitatievragen[0] = $('.1').html();
+            filter[0].sollicitatievragen[1] = $('.2').html();
+        }, 300);*/
+      });
+
+      function weerweg() {
+        if ($(".basisvraag").hasClass("select")) {
+          $(".basisvraag")
+            .removeClass("select")
+            .attr("contenteditable", "false");
+          var bedrijf = JSON.parse(JSON.stringify(JSON.parse(f)));
+          console.log(
+            "sessionStorage.setItem('bedrijf',JSON.stringify(data));"
+          );
+          sessionStorage.setItem("bedrijf", JSON.stringify(bedrijf));
+          socket.emit("update", bedrijf);
+        }
+      }
+
+      $(".oordeel").click(function(e) {
+        //oordeel.click
+        console.log(e.currentTarget.classList);
+        var u = e.currentTarget.classList[0];
+        $(".oordeel").animate(
+          {
+            width: "0px"
+          },
+          100
+        );
+        $(this).animate(
+          {
+            width: "0px"
+          },
+          200
+        );
+        $("#dikzak").css("border-bottom", "2px solid " + u + "!important");
+        document.getElementById("dikzak").style =
+          "border-bottom:2px solid " + u + "!important";
+        var f = JSON.parse(sessionStorage.bedrijf);
+        f.vacatures[hvac.i].chats[chat.i].oordeel = u;
+        sessionStorage.bedrijf = JSON.stringify(f);
+        console.log(sessionStorage.bedrijf);
+        socket.emit("update", JSON.parse(sessionStorage.bedrijf));
+      });
+      $("#dikzak").mouseenter(function() {
+        $(".oordeel").animate(
+          {
+            width: "50px"
+          },
+          100
+        );
+      });
+      $("#dikzak").mouseleave(function() {
+        //if (chat!==undefined&&chat.hasOwnProperty('oordeel')) {
+        //    return false;
+        //} else {
+        $(".oordeel").animate(
+          {
+            width: "0px"
+          },
+          100
+        );
+        /// }
+      });
+      /*$('#dikzak').click(function(e) {
+        //dikzak.click
+        e.stopPropagation();
+        console.log(e.target);
+        if (e.target.id != 'chosen') {
+            console.log(chat);
+            if (chat != undefined) {
+                $('.message').hide();
+                console.log(chat);
+                chat.kae.forEach(function(e) {
+                    $('#messages').append('<div>' + e + '</div>')
+                })
+            }
+        }
+
+    });*/
+      $(document).ready(function() {
+        $(".basisvraag").bind("contextmenu", function(e) {
+          e.preventDefault();
+          $("#test").show();
+          $("#test").offset({
+            left: e.pageX,
+            top: e.pageY
+          });
+          $("#html").click(function() {
+            $("#test").hide();
+          });
+        });
+        //    $('.messages_compose').mouseleave(function(e){
+        //      weerweg();
+        //});
+        $("#test").click(function() {
+          if (hvac != null && hvac != undefined) {
+            var bedrijf = JSON.parse(sessionStorage.bedrijf);
+            var i = JSON.parse(JSON.stringify(bedrijf.vacatures.indexOf(hvac)));
+            //$('.basisvraag').attr('contenteditable', 'true').addClass('select');
+            $(".basisvraag").attr("contenteditable", "true");
+            $(".basisvraag").addClass("select");
+            hvac.sollicitatievragen = [];
+            bedrijf.vacatures[i] = hvac;
+            sessionStorage.setItem("bedrijf", JSON.stringify(bedrijf));
+          }
+          $("#test").hide();
+        });
+        document.getElementById("html").onclick = function(e) {
+          e.stopPropagation();
+          if (
+            JSON.stringify(e.target.parentElement.classList).indexOf(
+              "messages_compose"
+            ) == -1 &&
+            JSON.stringify(e.target.parentElement.classList).indexOf(
+              "basisvraag"
+            ) == -1
+          ) {
+            $(".basisvraag")
+              .removeClass("select")
+              .attr("contenteditable", "false");
+          } else {
+            return;
+          }
+        };
+        $("#instellingen").click(function(e) {
+          if ($(this).hasClass("instellingenclicked")) {
+            $(this).animate(
+              {
+                height: "35px"
+              },
+              100
+            );
+          } else {
+            $(this).animate(
+              {
+                height: "150px"
+              },
+              100
+            );
+          }
+          $(this).toggleClass("instellingenclicked");
+        });
+        $("#send").on("contextmenu", function(e) {
+          e.preventDefault();
+          $("#plus")
+            .children()
+            .toggle();
+        });
+      });
+    </script>
+  </body>
+</html>

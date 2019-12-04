@@ -1,0 +1,260 @@
+/* This file contains the markup for the header and footer only */
+#navBar{
+    z-index: 2;
+    position: absolute;
+    left:0;
+    right:0;
+    padding: 10px;
+    color:white;
+    height:70px;
+}
+
+.navBarBackground{
+    background:white;
+    color:#525f7f !important;
+    box-shadow: 0 0 20px rgba(0, 0, 0, .5);
+}
+
+#navItems { position: relative; }
+#navItems.common-container{
+    padding:0;
+}
+.navLink {
+    color:white;
+    height:100%;
+    line-height: 50px;
+    max-height:50px;
+    padding:0 calc(10px + 1vw);
+    color:inherit;
+    white-space:nowrap;
+}
+.navLink:hover{
+    color:white;
+    opacity: 0.5;
+}
+
+.navSection.logo{ 
+    flex-grow:1; 
+    font-size: 120%;
+}
+
+/* popup styling */
+.popupLink{
+    position: relative;
+    line-height: 50px;
+    display: inline-block;
+    height:50px;
+    padding:0 25px;
+    color:#2ad1aa;
+    cursor: pointer;
+}
+
+#popupContainer{
+    background:#fff;
+    position: absolute;
+    left:0;
+    right:0;
+    top:5px;
+    border-radius: 5px;
+    transition:0.3s;
+    box-shadow: 0 15px 20px rgba(0, 0, 0, .3);
+}
+
+#popupHeader{ display: flex; }
+#popupHeader > span {
+    flex-grow: 1;
+    line-height: 50px;
+    padding: 5px 20px 0 20px;
+    font-size: 130%;
+    color:#525f7f;
+}
+
+#popupPrimary{ 
+    padding: 20px 0;
+    display:flex;
+    font-size: 110%;
+    flex-wrap: wrap;
+}
+#popupPrimary > ul{ flex-grow: 1; }
+#popupPrimary > ul:last-child{ flex-grow: 3; }
+
+#popupSecondary{
+    border-top: 3px solid #f3f3f3;
+    display:flex;
+    font-size: 90%;
+}
+#popupSecondary > ul{ flex-grow: 1; }
+#popupSecondary > ul:last-child{ flex-grow: 3; }
+
+#popupLogin{
+    background:#f3f3f3;
+    border-radius: 5px;
+    line-height:70px
+}
+
+/* drawing of the hamburger  */
+.navSection.mobile .navLink{
+    padding: 0 25px;
+    cursor: pointer;
+}
+#navToggle > a > .burger,
+#navToggle > a > .burger::before,
+#navToggle > a > .burger::after{
+    font-size: 0px; 
+    width:24px;
+    height:3px;
+    top:50%;
+    right: 13px;
+    position: absolute;
+    background: currentColor;
+    border-radius:1px;
+    justify-content: flex-end;
+}
+#navToggle > a > .burger::before,
+#navToggle > a > .burger::after{
+    content:""; 
+    left: 0;
+}
+#navToggle > a > .burger::before{ top: -9px; }
+#navToggle > a > .burger::after{ top: +9px; }
+
+/* dawing of the cross */
+#popupHeader label > .cross,
+#popupHeader label > .cross::after{
+    font-size: 0px; 
+    width:24px;
+    height:4px;
+    top: calc(50% - 2px);
+    left: calc(50% - 12px);
+    position: absolute;
+    background: #1e9579;
+    border-radius:1px;
+    transform: rotate(45deg);
+}
+#popupHeader label > .cross::after{
+    content:""; 
+    left: 0; 
+    top:0;
+    transform: rotate(90deg);
+}
+
+/* handle the popup toggle */
+#popupContainer {
+    opacity: 0;
+    pointer-events: none;
+}
+
+#popupToggle:checked ~ #popupContainer {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* handle screen width */
+@media only screen and (min-width: 740px){
+    #navItems { display: inherit; }
+    .navSection.logo { position: absolute; }
+    .navSection.secondary { position:absolute; }
+}
+@media only screen and (min-width: 650px) and (max-width:740px){
+    #navItems { display: flex; }
+    .navSection.logo { position: static; }
+    .navSection.secondary { position:static; }
+}
+@media only screen and (min-width: 650px){
+    .navSection.primary {
+        display:flex;
+        justify-content: center;
+    }
+    .navSection.secondary {
+        display:flex;
+        top:0;
+        right:0;
+    }
+    .navSection.mobile { display: none; }
+}
+
+@media only screen and (max-width: 650px){
+    #navItems { display: flex; }
+    .navSection.primary { display:none; }
+    .navSection.secondary { display:none; }
+    #navBar:not(.no-mobile) .navSection.mobile { 
+        display: flex;
+    }
+}
+
+/* and a small bit of the container, I lied */
+#content{
+    min-height: 100%;
+}
+
+main > header{
+    position: relative;
+}
+#scrollable{
+    width:100%;
+    height: 100%;
+    position: absolute;
+    background: linear-gradient(150deg,#396cff 10%,#05d5ff 70%,#2AD1AA 94%);
+    z-index: -1;
+}
+.adjust-main{
+    padding-top:70px;
+}
+
+/* Here is the footer */
+footer ul{
+    padding:0;
+}
+footer > .common-container{
+    display: flex;
+    grid-gap:20px;
+}
+footer .quickbar{
+    margin:20px 0;
+    display: flex;
+    flex-direction: column;
+    flex-grow:1;
+    flex-wrap: wrap;
+}
+@media only screen and (max-width:720px){
+    footer > .common-container{
+        flex-wrap:wrap;
+        grid-gap:0px;
+    }
+    footer .quickbar{
+        flex-direction: initial;
+        align-items: baseline;
+        justify-content: space-between;
+    }
+    footer .quickbar .name{
+        /* padding-bottom:15px; */
+    }
+    footer .quickbar li{
+        padding: 0 10px;
+    }
+}
+footer .quickbar .title{
+    font-size:21px;
+    padding-bottom:10px;
+}
+footer .quickbar .copyright{
+    color:grey;
+}
+footer .navigation{
+    display: flex;
+    flex-wrap: wrap;
+    flex-grow:3;
+    font-size:17px;
+}
+footer .navigation .container{
+    padding:0 10px;
+    flex-grow: 1;
+}
+footer .navigation a {
+    color: #444;
+}
+footer .navigation .title{
+    font-size:19px;
+    font-weight: 600;
+    color:rgb(46, 46, 46);
+}

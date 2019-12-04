@@ -1,0 +1,51 @@
+<%- include(_header) -%>
+<article id="input" class="common-container">
+    <form method="POST">
+        Signin: <br>
+        <%- common.input("email",        "jonnydoe", "name='email' autofocus required" ,"shadow") %> <br>
+        <%- common.input("password",        "Password", "name='password' type='password' required" ,"shadow") %><br>
+        <%- common.button("submit", {"Send":""}) %>
+    </form>
+    <%- common.button("signup", {"Signup":"./signup"})%>
+</article>
+<script>
+    let submit = document.getElementById("submit");
+    submit.onclick = function submitForm(event){
+        event.preventDefault();
+
+        for(let i = 0; i < document.getElementsByTagName('input').length; i++)
+            if(document.getElementsByTagName('input')[i].hasAttribute('required'))
+                if(document.getElementsByTagName('input')[i].value == "")
+                    return;
+
+        var http = new XMLHttpRequest();
+        http.open("POST", "", true);
+        http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+
+        var data = "email=" + document.getElementById("email").value;
+        data += "&password=" + document.getElementById("password").value;
+
+        http.send(data);
+        http.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText)
+                let response = JSON.parse(this.responseText);
+                if(response.status == "LoggedIn"){
+                    setCookie('uuid', response.cookies.uuid)
+                    setCookie('type', response.cookies.type)
+                    window.location.href = "./";
+                }
+            }
+        };
+    }
+
+    function setCookie(a, b){
+        document.cookie = a + "=" + b + ";"
+    }
+
+</script>
+
+<article id="messages" class="common-container">
+
+</article>
+<%- include(_footer) -%>

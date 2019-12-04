@@ -1,0 +1,314 @@
+html {
+    height:100vh;
+    width:100vw;
+}
+body {
+    height:100%;
+    width:100%;
+}
+* {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+}
+p,h1,h2,h3,span {
+    font-family: helvetica,sans-serif;
+    font-weight: lighter;
+}
+ a {
+     text-decoration: none;
+     color: inherit;
+}
+.h:hover {
+    cursor:pointer;
+}
+header {
+    height:50px;
+    width:100vw;
+    background:linear-gradient(to right,#42B0D8,#4783B4)
+}
+header p {
+    color:white;
+    font-size:20px;
+    font-weight: lighter;
+    float:left;
+    padding:15px;
+}
+header span {
+    float:left;
+    padding:15px;
+}
+#desvg {
+    box-sizing: content-box;
+    float:left;
+    padding-left:100px;
+}
+#rechterkant {
+    float:right;
+}
+#content {
+    margin:0 auto;
+    width:50%;
+    width:900px;
+}
+#content > * {
+    margin:0 auto
+}
+#content h1 {
+    display:table;
+    margin-top:50px
+}
+#contentinhetmidden {
+    background:#D4D4D4;
+    padding:20px 40px;
+    margin-top:30px;
+    border-radius:20px;
+    height:400px;
+}
+#contentinhetmidden > * {
+    margin:0 auto;
+    text-align: center;
+    width:200px;
+}
+#contentinhetmidden h2 h3 {
+    margin-top:10px;
+    width:auto!important;
+}
+#error {
+    height:0;
+    margin-top: 10px;
+    margin-bottom: -10px;
+    width:auto;
+}
+#geen_account {
+    background:#A0A0A0;
+    color:white;
+    display:table;
+    padding: 3px 7px;
+    font-size: 13px;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin:10px auto 0 auto;
+}
+#login_c {
+    margin-top:100px;
+    font-size:17px;
+}
+#login_c input {
+    border:none;
+    background:inherit;
+    font-size:20px;
+    color:black;
+    border-bottom:1px solid black;
+    padding-top:17px;
+    padding-left:2px;
+}
+#signup {
+    width:100%;
+}
+#signup input,select,textarea {
+    background:#fff;
+    border:none;
+    border-radius:5px;
+    height: 24px;
+    width: 170px;
+    margin-top:7px;
+    padding-left:7px;
+    font-family:helvetica,sans-serif;
+}
+#signup table {
+    width:100%;
+}
+#signup table tr td {
+    margin-top:2em;
+    width:50%;
+    height:40px;
+    text-align: left;
+    float:left;
+    box-sizing: content-box;
+    font-size:21px;
+}
+
+#signup_page2 {
+    width:100%;
+}
+
+#signup_page2 input,select {
+    background:#fff;
+    border:none;
+    border-radius:5px;
+    height:20px;
+    height: 24px;
+    width: 170px;
+    margin-top:7px;
+    padding-left:7px;
+}
+#signup_page2 table {
+    width:100%;
+}
+#signup_page2 table tr td {
+    margin-top:2em;
+    width:50%;
+    height:40px;
+    text-align: left;
+    float:left;
+    box-sizing: content-box;
+    font-size:21px;
+}
+select[multiple] option {
+    background:#fff;
+    border:none;
+    border-radius:3px;
+    height: 30px;
+    width: 150px;
+    margin-top:7px;
+}
+company_traits option span {
+    
+}
+.submit {
+    background:#42B0D8;
+    border:none;
+    color:white;
+    font-size:16px;
+    padding:3px 10px;
+    border-radius:5px;
+    width: 110px;
+    margin:auto;
+    display:block;
+    cursor:pointer
+}
+h2 {
+    font-size:30px;
+}
+#inloggen_met_linkedin {
+    color:#A0A0A0;
+    margin-top:10px;
+}
+#inloggen_met_linkedin.a {
+    margin-top:20px;
+    width: 240px;
+    display: flex;
+    color:white;
+}
+#inloggenc {
+    margin-top:30px;
+}
+#inloggen {
+    margin-top:28px!important;
+}
+.geen_account_signin {
+    margin-top:10px!important;
+}
+select::-ms-expand {
+    width:12px;
+    border:none;
+    background:#fff;
+}
+.help {
+    font-size: 13px;
+    margin-left: 35px;
+    background: #a0a0a0;
+    padding: 1px 5px;
+    border-radius: 10px;
+    cursor: default;
+    opacity:0.5
+}
+#table_page1 > tr:last-of-type td:last-child {
+    width: 100% !important;
+    text-align: center !important;
+}
+#table_page2 > tr:last-of-type td:last-child {
+    width: 170px !important;
+}
+#dots {
+    width: 50px;
+    margin-top: 7px;
+}
+.dot {
+    width: 17px;
+    height: 17px;
+    background: #A0A0A0;
+    border-radius: 30px;
+    float: left;
+    cursor:pointer;
+}
+.dot:last-of-type {
+    opacity: 0.5;
+    margin-left: 8px;
+}
+#signup_page2 {
+    display:none;
+}
+#not_filled_in {
+    position: absolute;
+    margin:0 auto
+}
+#eye {
+    margin-left:-32px;
+}
+#company_description {
+    width: 300px !important;
+    height: 90px !important;
+    overflow:auto;
+    resize: none;
+    padding-top:7px;
+}
+#company_traits {
+    position: absolute;
+}
+#volgende {
+    margin: 30px 30px;
+}
+#logo {
+    width:30vw;
+    max-width: 130px;
+    margin: 30px 35vw 0 35vw;
+    padding-top:4px;
+}
+
+#login {
+    margin-top:42px;
+    font-size:17px;
+}
+#login input {
+   border: none;
+    font-size: 20px;
+    color: white;
+    width: 100%;
+    background:#a4a4a4;
+    margin-top: 5px;
+    border-radius: 20px;
+    padding: 10px;
+}
+#login input::placeholder {
+    color:#fff;
+    opacity: 1;
+    font-weight:300;
+}
+#main_content {
+    height:80vh;
+}
+#onderaan p {
+    text-align:center;
+}
+.midphone {
+    width:240px;
+    height:240px;
+    margin:30px 18vw 0 18vw;
+    background:#D4D4D4;
+    padding:20px 40px;
+    border-radius:20px;
+}
+.midphone > * {
+    margin:0 auto;
+    text-align: center;
+}
+.midphone h2, h3 {
+    color:white;
+    margin-top: -10px;
+    width:auto!important;
+}
+#midphone_signin {
+    height:auto
+}

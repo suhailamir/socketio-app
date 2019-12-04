@@ -1,0 +1,59 @@
+<%- include(_header) -%>
+<div id='content'>
+        <h1>Welkom terug!</h1>
+        <div id='contentinhetmidden'>
+            <h2>Inloggen</h2>
+            <h3 id='error'></h3>
+            <form id='login'>
+                <input type="email" placeholder="Email" id="email">
+                <input type="password" placeholder="Wachtwoord" id="password">
+                <button type="submit" class='submit' class='h' id='inloggen'>Inloggen</button>
+            </form>
+            <p id='inloggen_met_linkedin' class='h' style='margin-top:70px'>Inloggen met LinkedIn</p>
+        </div>
+        <p id='geen_account'class='geen_account_signin'><a href='signup'>Nog geen account?</a></p>
+    </div>
+    <script src='jquery.js'></script>
+    <script>
+            let submit = document.getElementById("inloggen");
+    submit.onclick = function submitForm(event){
+        event.preventDefault();
+
+        for(let i = 0; i < document.getElementsByTagName('input').length; i++)
+            if(document.getElementsByTagName('input')[i].hasAttribute('required'))
+                if(document.getElementsByTagName('input')[i].value == "")
+                    return;
+
+        var http = new XMLHttpRequest();
+        http.open("POST", "", true);
+        http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+
+        var data = "email=" + document.getElementById("email").value;
+        data += "&password=" + document.getElementById("password").value;
+
+        http.send(data);
+        http.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                let response = JSON.parse(this.responseText);
+                if(response.status == "LoggedIn"){
+                    setCookie('uuid', response.cookies.uuid)
+                    setCookie('type', response.cookies.type)
+                    window.location.href = "./";
+                } else {
+                    if(response.status=="NoUser"){
+                        $('#error').text("Er bestaat geen gebruiker met dit emailadres.")
+                    }
+                    if(response.status=="WrongPassword"){
+                        $('#error').text("Verkeerde wachtwoord ingevoerd.")
+                    }
+                }
+            }
+        };
+    }
+
+    function setCookie(a, b){
+        document.cookie = a + "=" + b + ";"
+    }
+    </script>
+</body>
+<%- include(_footer) -%>

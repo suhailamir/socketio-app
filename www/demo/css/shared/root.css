@@ -1,0 +1,56 @@
+@font-face{
+    font-family: SegoeUI;
+    src: url(/fonts/SegoeUI.TTF) format('SegoeUI');
+}
+:root{
+    overflow-x: hidden;
+    height: 100%;
+}
+*{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+html,body{
+    margin: 0;
+    height:100%;
+    font-size:105%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background:none;
+}
+footer{
+    left:0;
+    right:0;
+    position: absolute;
+}
+ul, li{
+    padding:0;
+    list-style: none;
+}
+article{
+    color:#444;
+    background:white;
+    padding:50px 0;
+}
+a{
+    text-decoration: none;
+    color:rgb(32, 145, 165);
+    transition: 0.25s;
+    cursor: pointer;
+} a:not(.common-button):hover{ color: rgb(49, 49, 49); }
+
+input{
+    border:none;
+    background:none;
+    font-size: 100%;
+}
+input[type="search"]{
+    background-image:url(/img/common/search-small.png);
+    background-repeat:no-repeat;
+    background-position:-15px center;
+    padding-left:35px !important;
+    border-radius: 0;
+}
+clear{
+    clear:both;
+}
+

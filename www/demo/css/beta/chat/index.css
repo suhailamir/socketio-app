@@ -1,0 +1,49 @@
+main{
+    display:flex;
+    height:100%;
+}
+#people{
+    width: inherit;
+    margin:inherit;
+    border-right: solid 2px lightgray;
+}
+#tools{
+    margin-top: 15px;
+    display: flex;
+} a{ padding: 5px; }
+#delete{
+    flex-grow: 1;
+}
+
+#online_users li:hover{
+    background:lightgray;
+}
+.fast-info{
+    display: flex;
+    height: 1.5em;
+}.last-message{flex-grow: 1;}
+
+#chat{
+    margin: 0 20px;
+    padding:0;
+    position: relative;
+    flex-grow: 1;
+}
+#messages{
+    overflow-y: auto;
+    height: 100%;
+    background:rgb(194, 193, 193);
+}
+#controls{
+    max-width: 700px;
+    left:0;
+    right:0;
+    bottom:0;
+    padding: 10px 0;
+    position: absolute;
+    display: inline-flex;
+}
+#button{
+    height: 3em;
+    display: flex;
+}

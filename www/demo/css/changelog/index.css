@@ -1,0 +1,20 @@
+main{
+    background:#e5e8f0;
+    padding-bottom: 20px;
+}
+hr{
+    margin:10px 0;
+    max-width:340px; 
+    margin-bottom:20px;
+}
+ul{
+    padding:auto;
+}
+.common-card{
+    max-width: calc(100% - 30px);
+    padding-bottom:45px;
+}
+#card-adjust-changelog{
+    max-width: 50%;
+    padding-bottom:30px;
+}

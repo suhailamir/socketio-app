@@ -1,0 +1,24 @@
+﻿<%- include(_header) -%>
+<% page.addfile("socket.io.min.js") %>
+<% page.addfile("chat.js") %>
+
+<article id="people" class="common-container">
+        <section id="tools">
+                <a id="delete">delete chat</a>
+                <a id="new">new chat</a>
+        </section>
+        <%- common.list("online_users", []) %>
+        <%- //common.select("online_users", [] ,"bar-only" ) %>
+</article>
+
+<article id="chat">
+        <section id="messages">
+        </section>
+        <section id="controls" class="common-container">
+                <%- common.textarea("input", "...", "required autofocus" ,"shadow") %>
+                <%- common.button("button", {"Send":""}) %>
+        </section>
+</article>
+
+
+<%- include(_footer) -%>

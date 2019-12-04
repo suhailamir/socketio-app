@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="8" viewBox="0 0 31.809 11.339">
+  <g id="eye" transform="translate(-519.555 -654.661)">
+    <g id="eye-2" data-name="eye" transform="translate(530 655)" fill="none" stroke="#A0A0A0" stroke-width="2">
+      <circle cx="5.5" cy="5.5" r="5.5" stroke="none"/>
+      <circle cx="5.5" cy="5.5" r="4.5" fill="none"/>
+    </g>
+    <path id="Path_1" data-name="Path 1" d="M3335.5,1190.318c14.1-14.457,0-30.311,0-30.311" transform="matrix(0.017, -1, 1, 0.017, -697.811, 3976.723)" fill="none" stroke="#A0A0A0" stroke-width="2"/>
+  </g>
+</svg>
